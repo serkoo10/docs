@@ -32,6 +32,7 @@ const acquireLock = () => {
 acquireLock();
 try {
   if (project.repo && syncTasks(project)) {
+    git(projectPath, 'add', 'docs/plan.md');
     git(projectPath, 'commit', '-q', '-o', 'docs/plan.md', '-m', 'docs: link plan items to issues');
     log('план связан с issues, коммит в проекте');
   }
