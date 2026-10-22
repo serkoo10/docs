@@ -1,0 +1,30 @@
+{
+  "name": "docs",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@12.11.2",
+  "scripts": {
+    "sync": "node scripts/sync.mjs",
+    "tasks": "node scripts/tasks.mjs",
+    "start": "docusaurus start",
+    "build": "docusaurus build",
+    "serve": "docusaurus serve",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "@docusaurus/core": "3.10.2",
+    "@docusaurus/preset-classic": "3.10.2",
+    "prism-react-renderer": "^2.4.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@docusaurus/module-type-aliases": "3.10.2",
+    "@docusaurus/tsconfig": "3.10.2",
+    "@docusaurus/types": "3.10.2",
+    "typescript": "~5.9.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

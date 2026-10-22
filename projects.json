@@ -1,0 +1,29 @@
+[
+  {
+    "name": "runclub",
+    "description": "беговое приложение для тренеров и бегунов: клубы, тренировки, достижения, забеги, кроссовки.",
+    "path": "~/projects/runclub",
+    "repo": "serkoo10/runclub"
+  },
+  {
+    "name": "cashback",
+    "description": "личный агрегатор кэшбэка по банкам РФ (Flutter, iOS).",
+    "path": "~/projects/cashback",
+    "repo": "serkoo10/cashback"
+  },
+  {
+    "name": "studcore",
+    "description": "учёт контингента и документов для вузов (Go).",
+    "path": "~/projects/studcore"
+  },
+  {
+    "name": "airdrop-agent",
+    "description": "Telegram-юзербот, который ищет airdrop-возможности в крипто-чатах через Claude.",
+    "path": "~/projects/airdrop-agent"
+  },
+  {
+    "name": "bg-advisor",
+    "description": "советник по партиям в нарды.",
+    "path": "~/projects/bg-advisor"
+  }
+]
