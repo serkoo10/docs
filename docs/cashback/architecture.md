@@ -102,7 +102,12 @@ idle ──pick──▶ recognizing(image) ──ok──▶ review(draft) ─�
   удалить, перед сохранением всё видно.
 - `saving`: набор месяца заменяется черновиком, источник `screenshot`.
 
-`RecognitionApi`: `POST https://api.anthropic.com/v1/messages`, модель `claude-opus-5-5`,
+По умолчанию распознавание локальное (`LocalRecognitionApi`, `core/recognition/local`): Apple Vision
+читает строки с рамками (`TextRecognizer`), `parseScreenshot` собирает из них предложения по
+алиасам категорий, банк подбирается по каталогу; результат открывается в `review`.
+
+Запасной путь, в интерфейсе скрыт (код и ключ в Keychain остаются): `ClaudeRecognitionApi` —
+`POST https://api.anthropic.com/v1/messages`, модель `claude-opus-5-5`,
 без стриминга (ответ короткий), `output_config.format` с JSON-схемой — ответ всегда валидный
 JSON нужной формы, `fallbacks: "default"` с заголовком `server-side-fallback-2026-07-01`.
 Усилие `low`: извлечению со скриншота размышление не нужно, а его токены тоже входят в
