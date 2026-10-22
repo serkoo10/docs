@@ -47,7 +47,7 @@ app/lib/
 ```
 YearMonth        год + месяц; ключ "2026-10"; prev/next; fromDate
 CashbackCategory enum из 28 значений; у каждого hint для модели распознавания
-UserBank         id, name, colorHex, catalogId?, addedAt
+UserBank         id, name, colorHex, catalogId?, shortcutName?, addedAt
 Offer            category, percent, merchant?, limitRub?
 OfferSet         bankId, period, offers, source (manual | screenshot), updatedAt
 AppStore         banks: [UserBank], offerSets: {"<bankId>/<yyyy-MM>": OfferSet}
@@ -58,6 +58,9 @@ AppStore         banks: [UserBank], offerSets: {"<bankId>/<yyyy-MM>": OfferSet}
 - Банк из каталога и «свой банк» — одна сущность. При добавлении из каталога имя и
   цвет копируются в `UserBank`, `catalogId` хранится для сопоставления при распознавании.
   Дальше никто не различает их по происхождению.
+- Приложение банка открывается через «Команду» iOS (`shortcuts://run-shortcut?name=`),
+  имя хранится в `UserBank.shortcutName`: у приложений банков нет стабильных URL-схем.
+  Поле принадлежит пользователю, в каталоге его нет.
 - Период — календарный месяц. Банки с квартальными категориями ведутся по месяцам, для
   этого есть «повторить прошлый месяц».
 - Категории нормализованы в enum, иначе «Кафе и рестораны» одного банка и «Рестораны»
