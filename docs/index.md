@@ -21,4 +21,3 @@ sidebar_position: 0
 - [studcore](./studcore/index.md) — учёт контингента и документов для вузов (Go).
 - [airdrop-agent](./airdrop-agent/index.md) — Telegram-юзербот, который ищет airdrop-возможности в крипто-чатах через Claude.
 - [bg-advisor](./bg-advisor/index.md) — советник по партиям в нарды.
-- [hooktest](./hooktest/index.md) — временный тест хука.

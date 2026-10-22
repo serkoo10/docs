@@ -2,6 +2,7 @@
 // Папка проекта на сайте пересоздаётся целиком, чтобы удаления тоже доезжали.
 import {copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync} from 'node:fs';
 import {dirname, join, relative} from 'node:path';
+import {fileURLToPath} from 'node:url';
 import {projects, resolvePath, SITE_ROOT} from './projects.mjs';
 
 const DOCS = `${SITE_ROOT}docs/`;
@@ -75,5 +76,9 @@ ${list}
   );
 };
 
-projects.forEach((project, i) => syncProject(project, i + 1));
-writeIndex();
+export const syncAll = () => {
+  projects.forEach((project, i) => syncProject(project, i + 1));
+  writeIndex();
+};
+
+if (process.argv[1] === fileURLToPath(import.meta.url)) syncAll();

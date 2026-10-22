@@ -6,6 +6,7 @@
   "scripts": {
     "sync": "node scripts/sync.mjs",
     "tasks": "node scripts/tasks.mjs",
+    "hooks": "node scripts/install-hooks.mjs",
     "start": "docusaurus start",
     "build": "docusaurus build",
     "serve": "docusaurus serve",
