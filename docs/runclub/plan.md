@@ -6,19 +6,19 @@ docs создаст issue и допишет ссылку.
 
 ## G. Публикация
 
-- [ ] Пройти ручные шаги беты из release.md: TestFlight, Google Play, RuStore
+- [ ] Пройти ручные шаги беты из release.md: TestFlight, Google Play, RuStore ([#1](https://github.com/serkoo10/runclub/issues/1))
 
 ## H. Оплата
 
-- [ ] ЮKassa: оплата тарифа тренера через сайт, СБП
-- [ ] Партнёрка по слотам
+- [ ] ЮKassa: оплата тарифа тренера через сайт, СБП ([#2](https://github.com/serkoo10/runclub/issues/2))
+- [ ] Партнёрка по слотам ([#3](https://github.com/serkoo10/runclub/issues/3))
 
 ## I. Видео
 
-- [ ] Проверить живой звонок и трансляцию на устройствах (iOS, Android)
-- [ ] Запись сессии и библиотека уроков клуба на устройствах
+- [ ] Проверить живой звонок и трансляцию на устройствах (iOS, Android) ([#4](https://github.com/serkoo10/runclub/issues/4))
+- [ ] Запись сессии и библиотека уроков клуба на устройствах ([#5](https://github.com/serkoo10/runclub/issues/5))
 
 ## J. Интеграции
 
-- [ ] Проверить Polar и Strava с реальными аккаунтами
-- [ ] Garmin и COROS, когда дадут доступ к API
+- [ ] Проверить Polar и Strava с реальными аккаунтами ([#6](https://github.com/serkoo10/runclub/issues/6))
+- [ ] Garmin и COROS, когда дадут доступ к API ([#7](https://github.com/serkoo10/runclub/issues/7))
