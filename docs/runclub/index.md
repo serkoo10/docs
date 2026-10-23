@@ -90,6 +90,12 @@ xcodebuild -project RunClub.xcodeproj -scheme RunClub \
 (build setting в `ios/project.yml`), иначе запуск завершится ошибкой. `BETA_SCOPE=YES` скрывает кроссовки,
 подключённые сервисы и видео.
 
+Вход через VK ID включается build settings `VK_APP_CLIENT_ID` и `VK_APP_CLIENT_SECRET` (значения из кабинета
+VK ID; задаются в `ios/project.yml` или при сборке `xcodebuild VK_APP_CLIENT_ID=... VK_APP_CLIENT_SECRET=...`).
+Они попадают в Info.plist вместе с URL-схемой `vk<client id>`. Пока id или секрет пусты, кнопка VK скрыта
+и SDK не инициализируется. Sign in with Apple включён entitlement'ом `com.apple.developer.applesignin`
+(`ios/RunClub/RunClub.entitlements`, генерируется из `ios/project.yml`).
+
 ## Ключевые решения
 
 - Один аккаунт, роли флагами `is_coach` и `is_runner`, две строки пользователя на одного человека не заводятся: `docs/architecture.md`, начало и «Доменная модель».

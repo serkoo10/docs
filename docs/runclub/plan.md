@@ -28,3 +28,4 @@ docs создаст issue и допишет ссылку.
 Нативное приложение в `ios/` заменяет Flutter на iOS; `app/` остаётся для Android.
 
 - [ ] Каркас SwiftUI-приложения: проект, тема, строки, API-клиент с refresh, Keychain, сессия ([#8](https://github.com/serkoo10/runclub/issues/8))
+- [ ] SwiftUI: вход (телефон, Apple, VK), онбординг, профиль, удаление аккаунта ([#9](https://github.com/serkoo10/runclub/issues/9))
