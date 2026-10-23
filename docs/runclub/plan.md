@@ -22,3 +22,9 @@ docs создаст issue и допишет ссылку.
 
 - [ ] Проверить Polar и Strava с реальными аккаунтами ([#6](https://github.com/serkoo10/runclub/issues/6))
 - [ ] Garmin и COROS, когда дадут доступ к API ([#7](https://github.com/serkoo10/runclub/issues/7))
+
+## K. SwiftUI для iOS
+
+Нативное приложение в `ios/` заменяет Flutter на iOS; `app/` остаётся для Android.
+
+- [ ] Каркас SwiftUI-приложения: проект, тема, строки, API-клиент с refresh, Keychain, сессия ([#8](https://github.com/serkoo10/runclub/issues/8))

@@ -74,6 +74,22 @@ flutter run --dart-define=API_BASE_URL=http://192.168.1.10:8080/v1   # реал�
   вручную (Runner, Signing & Capabilities), без этого вход через Apple на устройстве не заработает.
   Подробнее: `docs/release.md`, раздел «Xcode-проект».
 
+### iOS (SwiftUI)
+
+Нативный клиент для iOS лежит в `ios/` и постепенно заменяет Flutter-версию на iPhone; `app/` остаётся основой для Android.
+Нужны Xcode 26+ и `brew install xcodegen`. Проект `RunClub.xcodeproj` генерируется и в git не хранится.
+
+```
+cd ios
+xcodegen generate
+xcodebuild -project RunClub.xcodeproj -scheme RunClub \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro,OS=26.5' test
+```
+
+В Debug приложение ходит на `http://localhost:8080/v1`. Для релиза задайте `API_BASE_URL=https://...`
+(build setting в `ios/project.yml`), иначе запуск завершится ошибкой. `BETA_SCOPE=YES` скрывает кроссовки,
+подключённые сервисы и видео.
+
 ## Ключевые решения
 
 - Один аккаунт, роли флагами `is_coach` и `is_runner`, две строки пользователя на одного человека не заводятся: `docs/architecture.md`, начало и «Доменная модель».
