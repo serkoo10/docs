@@ -4,19 +4,22 @@
 
 ## Окружение разработчика
 
-- [ ] `sudo xcode-select -s /Applications/Xcode.app`, затем `flutter doctor` без ошибок по iOS.
-- [ ] `cd app/ios && pod install`, первый запуск на симуляторе: `flutter run -d iphone`.
+- [ ] `sudo xcode-select -s /Applications/Xcode.app`, `brew install xcodegen`.
+- [ ] iOS-клиент — SwiftUI в `ios/` (Flutter на iOS не выпускается): `cd ios && xcodegen generate`, первая сборка
+      из Xcode (пакеты LiveKit), затем тесты по README.
 - [x] Android: эмулятор API 34+, `flutter run -d emulator`, API через `10.0.2.2`. Smoke-прогон на Pixel_8 (API 35) прошёл 2026-10-13.
 
-## Xcode-проект (вручную, один раз)
+## Xcode-проект
 
-- [ ] Bundle id `ru.runclub.runclubApp`, Team выбран, автоматическая подпись.
-- [ ] Capabilities: Sign in with Apple, Push Notifications (на будущее, пока не используется, можно
-      не включать). HealthKit (без Clinical Health Records) уже в `Runner.entitlements` и подключён к таргету.
-- [x] `Runner.entitlements` попадает в таргет.
-- [ ] Info.plist уже содержит: NSHealthShareUsageDescription, NSHealthUpdateUsageDescription,
-      NSPhotoLibraryUsageDescription, NSAllowsLocalNetworking (только debug).
-- [ ] Иконка 1024×1024 без прозрачности, launch screen.
+Проект генерируется из `ios/project.yml`; правки только там, не в Xcode.
+
+- [x] Bundle id `ru.runclub.runclubApp`, Team `Q78L322772`, автоматическая подпись.
+- [x] Entitlements из `project.yml`: Sign in with Apple, HealthKit (без Clinical Health Records).
+- [x] Info.plist: NSCamera/NSMicrophone/NSHealthShare/NSHealthUpdate UsageDescription, фоновый звук для звонка,
+      `ITSAppUsesNonExemptEncryption = NO`, NSAllowsLocalNetworking (только локальные адреса).
+- [x] Privacy manifest `ios/RunClub/Resources/PrivacyInfo.xcprivacy`: собираемые данные как в Nutrition Labels
+      ниже, трекинга нет, UserDefaults с причиной CA92.1.
+- [ ] Иконка 1024×1024 без прозрачности (взята из Flutter-проекта), launch screen системный.
 
 ## Бэкенд в проде
 
@@ -32,7 +35,7 @@
       (иначе лимиты OTP по IP обходятся подменой заголовка). Без прокси оставить `false`.
 - [ ] Вход через VK ID: приложение в кабинете id.vk.ru (iOS bundle id `ru.runclub.runclubApp`, Android-пакет
       `ru.runclub.runclub_app` и SHA-1/SHA-256 ключа подписи), `VK_CLIENT_ID` на бэкенде. В клиенте один и тот же
-      client id в трёх местах: `VK_APP_CLIENT_ID`/`VK_APP_CLIENT_SECRET` в `app/ios/Flutter/VKID.xcconfig`,
+      client id в трёх местах: build settings `VK_APP_CLIENT_ID`/`VK_APP_CLIENT_SECRET` при сборке `ios/`,
       `VKIDClientID`/`VKIDClientSecret` в `app/android/local.properties` (или `-P`), `--dart-define=VK_APP_CLIENT_ID=...`
       в сборке (без него кнопка скрыта). Секреты не коммитить. Модерация приложения в VK ID для scope phone/email.
 - [ ] `INTEGRATION_TOKEN_KEY` выпущен (`openssl rand -base64 32`) и лежит в секретах; потеря ключа требует переподключения всех сервисов.
@@ -91,10 +94,11 @@
 
 ## TestFlight
 
-- [ ] `flutter build ipa --release --obfuscate --split-debug-info=build/symbols/<версия>
-      --dart-define=API_BASE_URL=https://api.<домен>/v1`, загрузка через Transporter или
-      Xcode Organizer. Папку `build/symbols/<версия>` сохранить вне репозитория: без неё
-      стектрейсы крашей этой версии не расшифровать (`flutter symbolize`).
+- [ ] Версия: `MARKETING_VERSION` и `CURRENT_PROJECT_VERSION` в `ios/project.yml`, номер сборки растёт с каждой загрузкой.
+- [ ] `cd ios && xcodegen generate && xcodebuild archive -project RunClub.xcodeproj -scheme RunClub
+      -destination 'generic/platform=iOS' -archivePath build/RunClub.xcarchive
+      API_BASE_URL=https://api.<домен>/v1 VK_APP_CLIENT_ID=... VK_APP_CLIENT_SECRET=...`,
+      загрузка через Xcode Organizer. dSYM лежат в архиве, Organizer отправляет их вместе со сборкой.
 - [ ] Внутренняя группа (команда), внешняя группа 3–5 клубов до 200 человек.
 - [ ] Метрики беты: тренеры, создавшие клуб за первую неделю; ученики, выполнившие первое задание;
       удержание на 4-й неделе. Собираются из базы SQL-запросами, аналитика третьих сторон не ставится.
@@ -138,12 +142,13 @@
       заведения ключа для Play добавить и его отпечатки.
 - [ ] Модерация в VK ID на scope phone и email, иначе вход отдаёт только id.
 - [ ] Client id и secret, в git не коммитить:
-      - iOS: `VK_APP_CLIENT_ID` / `VK_APP_CLIENT_SECRET` в `app/ios/Flutter/VKID.xcconfig`
-        (файл в git — реальные значения только локально или в CI);
+      - iOS: build settings `VK_APP_CLIENT_ID` / `VK_APP_CLIENT_SECRET` в команде `xcodebuild archive`
+        (раздел TestFlight), в `ios/project.yml` не коммитить;
       - Android: `VKIDClientID` / `VKIDClientSecret` в `app/android/local.properties` или `-P`;
         без них схема возврата в манифесте пустая (`vk`) и вход не вернётся в приложение;
       - бэкенд: `VK_CLIENT_ID` в `backend/.env`, перезапуск API.
-- [ ] Сборка с `--dart-define=VK_APP_CLIENT_ID=...`, без него кнопка VK скрыта.
+- [ ] Android: сборка с `--dart-define=VK_APP_CLIENT_ID=...`, без него кнопка VK скрыта. iOS: без обоих build settings
+      кнопка скрыта.
 - [ ] Проверка на iPhone и Android: «Войти через VK» → VK или браузер → возврат в приложение
       авторизованным.
 
@@ -165,7 +170,7 @@
       приглашают кодом из буфера обмена; маршрут `/join/:code` и перенос адреса через вход уже
       готовы в клиенте. Нужны: `/.well-known/apple-app-site-association` и `assetlinks.json` на домене
       (Team ID, `ru.runclub.runclubApp`; пакет `ru.runclub.runclub_app` и SHA-256 ключа подписи),
-      Associated Domains `applinks:<домен>` в `Runner.entitlements`, intent-filter `autoVerify` на
+      Associated Domains `applinks:<домен>` в entitlements `ios/project.yml`, intent-filter `autoVerify` на
       `https://<домен>/join` в AndroidManifest, кнопка «Поделиться ссылкой» рядом с кодом.
 
 ### 6. App Store Connect, после шагов 2 и 4

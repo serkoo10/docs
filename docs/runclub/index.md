@@ -69,15 +69,14 @@ flutter run --dart-define=API_BASE_URL=http://192.168.1.10:8080/v1   # реал�
 
 ### Только для iOS
 
-- Нужен `sudo xcode-select -s /Applications/Xcode.app`, затем `flutter doctor` без ошибок по iOS.
-- HealthKit уже включён в проекте (`ios/Runner/Runner.entitlements`). Sign in with Apple добавьте в Xcode
-  вручную (Runner, Signing & Capabilities), без этого вход через Apple на устройстве не заработает.
-  Подробнее: `docs/release.md`, раздел «Xcode-проект».
+Flutter-сборка на iOS больше не выпускается: iOS-клиент — SwiftUI в `ios/`, см. «iOS (SwiftUI)» ниже.
 
 ### iOS (SwiftUI)
 
-Нативный клиент для iOS лежит в `ios/` и постепенно заменяет Flutter-версию на iPhone; `app/` остаётся основой для Android.
+Нативный клиент для iOS лежит в `ios/` и заменяет Flutter-версию на iPhone и iPad; `app/` остаётся основой для Android.
 Нужны Xcode 26+ и `brew install xcodegen`. Проект `RunClub.xcodeproj` генерируется и в git не хранится.
+Первую сборку после клонирования запустите из Xcode: бинарные пакеты LiveKit скачиваются с запросом
+доступа к связке ключей, и `xcodebuild` из терминала без этого зависает.
 
 ```
 cd ios
@@ -91,7 +90,7 @@ xcodebuild -project RunClub.xcodeproj -scheme RunClub \
 подключённые сервисы и видео.
 
 Вход через VK ID включается build settings `VK_APP_CLIENT_ID` и `VK_APP_CLIENT_SECRET` (значения из кабинета
-VK ID; задаются в `ios/project.yml` или при сборке `xcodebuild VK_APP_CLIENT_ID=... VK_APP_CLIENT_SECRET=...`).
+VK ID; только при сборке `xcodebuild VK_APP_CLIENT_ID=... VK_APP_CLIENT_SECRET=...`, в `ios/project.yml` их не коммитить).
 Они попадают в Info.plist вместе с URL-схемой `vk<client id>`. Пока id или секрет пусты, кнопка VK скрыта
 и SDK не инициализируется. Sign in with Apple включён entitlement'ом `com.apple.developer.applesignin`
 (`ios/RunClub/RunClub.entitlements`, генерируется из `ios/project.yml`).

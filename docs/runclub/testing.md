@@ -11,7 +11,7 @@
 | Интеграционные тесты HTTP на реальном Postgres | `backend/internal/httpserver/integration_*_test.go` | SQL, маппинг ошибок, сквозные сценарии по этапам |
 | Юнит-тесты Dart: домен, нотифаеры, интерцепторы | `app/test` | Форматы, пагинация, refresh токенов, права на клиенте |
 | Виджет-тесты критичных экранов на фейках `test/support` | `app/test/features/*/*_screen_test.dart`, `workout_card_test.dart` | Вёрстка и реакции: вход с выбором страны, карточка тренировки, композер поста, экран звонка |
-| Контракт: эталонные ответы бэкенда, разбор моделями клиента | `docs/fixtures`, `backend/internal/httpserver/integration_fixtures_test.go`, `app/test/contract` | Расхождение ответов бэкенда с моделями клиента: падает на одной из сторон |
+| Контракт: эталонные ответы бэкенда, разбор моделями клиента | `docs/fixtures`, `backend/internal/httpserver/integration_fixtures_test.go`, `app/test/contract`, `ios/RunClubTests/ContractFixturesTests.swift` | Расхождение ответов бэкенда с моделями клиента: падает на одной из сторон |
 | Smoke-тест на iOS-симуляторе и Android-эмуляторе со скриншотами | `app/integration_test`, `app/tool/smoke.sh` | Сборка, навигация, что экраны вообще открываются |
 | Проба LiveKit Go-клиентом | `backend/cmd/lkprobe` | Вебхуки, подпись, учёт присутствия |
 
