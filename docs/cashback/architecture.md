@@ -47,10 +47,11 @@ app/lib/
 ```
 YearMonth        год + месяц; ключ "2026-10"; prev/next; fromDate
 CashbackCategory enum из 28 значений; у каждого hint для модели распознавания
-UserBank         id, name, colorHex, catalogId?, shortcutName?, addedAt
+UserBank         id, name, colorHex, catalogId?, shortcutName?, monthlyPicks?, addedAt
 Offer            category, percent, merchant?, limitRub?
 OfferSet         bankId, period, offers, source (manual | screenshot), updatedAt
-AppStore         banks: [UserBank], offerSets: {"<bankId>/<yyyy-MM>": OfferSet}
+AppStore         banks: [UserBank], offerSets: {"<bankId>/<yyyy-MM>": OfferSet},
+                 spending: {"<category>": рубли в месяц}
 ```
 
 Решения:
@@ -67,6 +68,18 @@ AppStore         banks: [UserBank], offerSets: {"<bankId>/<yyyy-MM>": OfferSet}
   другого не сравнить. Нестандартные попадают в `other` с названием в `merchant`.
 - Набор категорий банка на месяц хранится целиком и заменяется целиком: импорт
   скриншота перезаписывает месяц, а не сливается с ним. Скриншот — снимок истины.
+- Подбор категорий в начале месяца (SwiftUI-версия). `AppDocument.spending` — примерные траты
+  по категориям, пишутся через `SpendingCommands`; `UserBank.monthlyPicks` — сколько
+  категорий банк даёт выбрать, запоминается при сохранении выбора. Обоих полей нет во
+  Flutter-версии: она их не читает и при записи теряет; старый `store.json` без них
+  читается (`[:]` и nil). `ImportDraft.selection` — `.chosen` или
+  `.choice(picks:, checked:)`; отметки привязаны к номерам строк (`DraftOffer.id`), а не к
+  позициям. `CategoryAdvisor` (чистая функция, `Features/Import/Domain`) считает выигрыш
+  строки сверх лучшей ставки остальных банков за тот же месяц (категории или `.all`) по
+  тратам и берёт `picks` лучших; без трат выигрыш не считается и ничего не отмечается.
+  Сохраняются только отмеченные строки, так что `OfferSet` по-прежнему значит «выбранные
+  на месяц». Изменение числа выбираемых, банка или месяца пересчитывает рекомендацию и
+  стирает ручные отметки; правка и удаление строк отметки не трогают.
 
 ## Хранилище
 
