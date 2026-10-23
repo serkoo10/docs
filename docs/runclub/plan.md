@@ -29,3 +29,7 @@ docs создаст issue и допишет ссылку.
 
 - [ ] Каркас SwiftUI-приложения: проект, тема, строки, API-клиент с refresh, Keychain, сессия ([#8](https://github.com/serkoo10/runclub/issues/8))
 - [ ] SwiftUI: вход (телефон, Apple, VK), онбординг, профиль, удаление аккаунта ([#9](https://github.com/serkoo10/runclub/issues/9))
+- [ ] SwiftUI: главная, клубы, тренировки и HealthKit, достижения, синхронизация ([#10](https://github.com/serkoo10/runclub/issues/10))
+- [ ] SwiftUI: забеги, кроссовки, переписка, жалобы и блокировка ([#11](https://github.com/serkoo10/runclub/issues/11))
+- [ ] SwiftUI: онлайн-сессии и уроки (LiveKit, AVKit), Polar и Strava ([#12](https://github.com/serkoo10/runclub/issues/12))
+- [ ] SwiftUI: подготовка к TestFlight — privacy manifest, иконка, release.md ([#13](https://github.com/serkoo10/runclub/issues/13))
